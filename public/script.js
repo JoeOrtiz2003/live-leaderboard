@@ -26,10 +26,24 @@ function animateColumns(direction) {
     : [...all.keys()].reverse();
 
   function animateNext(i) {
-    if (i >= indices.length) return;
+    if (i >= indices.length) {
+      // After all are hidden, collapse the container
+      if (direction === "hide") {
+        const mainDiv = document.getElementById("mainDiv");
+        mainDiv.style.height = "0";
+        mainDiv.style.overflow = "hidden";
+      }
+      return;
+    }
     const el = all[indices[i]];
     el.classList.remove('animated-in', 'animated-out');
     if (direction === "show") {
+      // Restore container on show
+      if (i === 0) {
+        const mainDiv = document.getElementById("mainDiv");
+        mainDiv.style.height = "";
+        mainDiv.style.overflow = "";
+      }
       el.style.opacity = 1;
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {

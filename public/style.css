@@ -250,10 +250,10 @@ body {
 }
 
 .animated-in {
-  animation: fadeSlideInLeft 0.4s forwards;
+  animation: fadeSlideInLeft 0.15s forwards;
 }
 .animated-out {
-  animation: fadeSlideOutRight 0.4s forwards;
+  animation: fadeSlideOutRight 0.15s forwards;
 }
 
 /* Optional: Prevent pointer events during animation */
