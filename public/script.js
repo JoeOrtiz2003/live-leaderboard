@@ -20,16 +20,25 @@ function animateColumns(direction) {
   const rows = Array.from(document.querySelectorAll('.rankingElement'));
   const lower = document.querySelector('.lowerHeader');
   const all = [header, ...rows, lower].filter(Boolean);
+  const mainDiv = document.getElementById("mainDiv");
 
   let indices = direction === "show"
     ? [...all.keys()]
     : [...all.keys()].reverse();
 
+  // Reset container before show
+  if (direction === "show") {
+    mainDiv.style.height = "";
+    mainDiv.style.overflow = "";
+    all.forEach(el => {
+      el.style.opacity = 0; // Ensure all are hidden before animating in
+    });
+  }
+
   function animateNext(i) {
     if (i >= indices.length) {
       // After all are hidden, collapse the container
       if (direction === "hide") {
-        const mainDiv = document.getElementById("mainDiv");
         mainDiv.style.height = "0";
         mainDiv.style.overflow = "hidden";
       }
@@ -37,19 +46,13 @@ function animateColumns(direction) {
     }
     const el = all[indices[i]];
     el.classList.remove('animated-in', 'animated-out');
-    el.style.animationDelay = `${i * 100}ms`; // <-- Add this line
+    el.style.animationDelay = `${i * 100}ms`;
     if (direction === "show") {
-      // Restore container on show
-      if (i === 0) {
-        const mainDiv = document.getElementById("mainDiv");
-        mainDiv.style.height = "";
-        mainDiv.style.overflow = "";
-      }
       el.style.opacity = 1;
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-in');
-        el.style.animationDelay = "0ms"; // Reset after animation
+        el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
@@ -58,7 +61,7 @@ function animateColumns(direction) {
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
         el.style.opacity = 0;
-        el.style.animationDelay = "0ms"; // Reset after animation
+        el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });

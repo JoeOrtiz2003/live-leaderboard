@@ -224,7 +224,7 @@ body {
   will-change: transform, opacity;
 }
 
-/*@keyframes slideInLeft {
+@keyframes slideInLeft {
   from { transform: translateX(-100%) translateY(115px); opacity: 0; }
   to   { transform: translateX(0%) translateY(115px); opacity: 1; }
 }
@@ -238,7 +238,7 @@ body {
 }
 #mainDiv.slide-out-right {
   animation: slideOutRight 0.7s forwards;
-}*/
+}
 
 @keyframes fadeSlideInLeft {
   from { transform: translateX(-100%); opacity: 0; }
