@@ -49,7 +49,7 @@ function animateColumns(direction) {
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-in');
-        el.style.animationDelay = ""; // Reset after animation
+        el.style.animationDelay = "0ms"; // Reset after animation
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
@@ -58,7 +58,7 @@ function animateColumns(direction) {
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
         el.style.opacity = 0;
-        el.style.animationDelay = ""; // Reset after animation
+        el.style.animationDelay = "0ms"; // Reset after animation
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
