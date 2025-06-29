@@ -26,18 +26,24 @@ function animateColumns(direction) {
     ? [...all.keys()]
     : [...all.keys()].reverse();
 
-  // Reset container before show
+  // Hide all rows before show, show all before hide
+  all.forEach((el, idx) => {
+    if (direction === "show") {
+      el.style.opacity = 0;
+      el.style.visibility = "hidden";
+    } else {
+      el.style.opacity = 1;
+      el.style.visibility = "visible";
+    }
+  });
+
   if (direction === "show") {
     mainDiv.style.height = "";
     mainDiv.style.overflow = "";
-    all.forEach(el => {
-      el.style.opacity = 0; // Ensure all are hidden before animating in
-    });
   }
 
   function animateNext(i) {
     if (i >= indices.length) {
-      // After all are hidden, collapse the container
       if (direction === "hide") {
         mainDiv.style.height = "0";
         mainDiv.style.overflow = "hidden";
@@ -47,7 +53,9 @@ function animateColumns(direction) {
     const el = all[indices[i]];
     el.classList.remove('animated-in', 'animated-out');
     el.style.animationDelay = `${i * 100}ms`;
+
     if (direction === "show") {
+      el.style.visibility = "visible";
       el.style.opacity = 1;
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
@@ -61,6 +69,7 @@ function animateColumns(direction) {
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
         el.style.opacity = 0;
+        el.style.visibility = "hidden";
         el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
