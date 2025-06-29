@@ -255,6 +255,12 @@ body {
 .animated-out {
   animation: fadeSlideOutRight 0.10s ease-in-out forwards;
 }
+.stagger-animate-in {
+  animation: fadeSlideInLeft 0.4s ease-in-out forwards;
+}
+.stagger-animate-out {
+  animation: fadeSlideOutRight 0.4s ease-in-out forwards;
+}
 
 /* Optional: Prevent pointer events during animation */
 .animating-columns * {

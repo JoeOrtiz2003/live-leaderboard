@@ -45,25 +45,24 @@ function animateColumns(direction) {
       return;
     }
     const el = all[indices[i]];
-    el.classList.remove('animated-in', 'animated-out');
+    el.classList.remove('stagger-animate-in', 'stagger-animate-out');
     el.style.animationDelay = `${i * 100}ms`;
 
     if (direction === "show") {
       el.style.visibility = "visible";
-      el.classList.add('animated-in');
+      el.classList.add('stagger-animate-in');
       el.addEventListener('animationend', function handler() {
-        el.classList.remove('animated-in');
+        el.classList.remove('stagger-animate-in');
         el.style.opacity = 1;
         el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
     } else {
-      // Only now make it visible and start animation out
       el.style.visibility = "visible";
-      el.classList.add('animated-out');
+      el.classList.add('stagger-animate-out');
       el.addEventListener('animationend', function handler() {
-        el.classList.remove('animated-out');
+        el.classList.remove('stagger-animate-out');
         el.style.opacity = 0;
         el.style.visibility = "hidden";
         el.style.animationDelay = "0ms";
