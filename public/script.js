@@ -26,13 +26,12 @@ function animateColumns(direction) {
     ? [...all.keys()]
     : [...all.keys()].reverse();
 
-  // Hide all rows before show, show all before hide
-  all.forEach((el) => {
-    el.style.opacity = 0;
-    el.style.visibility = "hidden";
-  });
-
+  // For "show", hide all before animating in
   if (direction === "show") {
+    all.forEach(el => {
+      el.style.opacity = 0;
+      el.style.visibility = "hidden";
+    });
     mainDiv.style.height = "";
     mainDiv.style.overflow = "";
   }
@@ -50,20 +49,18 @@ function animateColumns(direction) {
     el.style.animationDelay = `${i * 100}ms`;
 
     if (direction === "show") {
-      // Only now make it visible and start animation
       el.style.visibility = "visible";
-      // Do NOT set opacity to 1 here; let the animation handle it
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-in');
-        el.style.opacity = 1; // Ensure it's fully visible after animation
+        el.style.opacity = 1;
         el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
     } else {
+      // Only now make it visible and start animation out
       el.style.visibility = "visible";
-      // Do NOT set opacity to 1 here; let the animation handle it
       el.classList.add('animated-out');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
