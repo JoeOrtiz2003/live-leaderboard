@@ -2,18 +2,36 @@ setInterval(() => {
   fetch("/api/control")
     .then(res => res.json())
     .then(command => {
-      if (command.action === "hide") {
-        animateColumns("hide");
-        setTimeout(() => { mainDiv.style.opacity = 0; }, 1200); // hide after animation
-      } else if (command.action === "show") {
-        mainDiv.style.opacity = 1;
-        animateColumns("show");
-      } else if (command.action === "refresh") {
-        fetchRankingData();
+      if (command.action !== lastAction) {
+        if (command.action === "hide") {
+          animateMainDiv("hide");
+        } else if (command.action === "show") {
+          animateMainDiv("show");
+        } else if (command.action === "refresh") {
+          fetchRankingData();
+        }
+        lastAction = command.action;
       }
     });
 }, 1000);
 
+function animateMainDiv(direction) {
+  const mainDiv = document.getElementById("mainDiv");
+  mainDiv.classList.remove("slide-in-left", "slide-out-right");
+  if (direction === "show") {
+    mainDiv.style.opacity = 1;
+    mainDiv.classList.add("slide-in-left");
+    mainDiv.addEventListener("animationend", () => {
+      mainDiv.classList.remove("slide-in-left");
+    }, { once: true });
+  } else if (direction === "hide") {
+    mainDiv.classList.add("slide-out-right");
+    mainDiv.addEventListener("animationend", () => {
+      mainDiv.classList.remove("slide-out-right");
+      mainDiv.style.opacity = 0;
+    }, { once: true });
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const mainDiv = document.getElementById("mainDiv");
