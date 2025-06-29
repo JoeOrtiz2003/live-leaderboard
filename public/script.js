@@ -16,27 +16,38 @@ setInterval(() => {
 }, 1000);
 
 function animateColumns(direction) {
-  const mainDiv = document.getElementById("mainDiv");
-  mainDiv.classList.remove("slide-in-left", "slide-out-right");
-  if (direction === "show") {
-    mainDiv.style.opacity = 1;
-    mainDiv.style.pointerEvents = "auto";
-    mainDiv.classList.add("slide-in-left");
-    mainDiv.addEventListener("animationend", () => {
-      mainDiv.classList.remove("slide-in-left");
-      mainDiv.style.height = ""; // Reset height after show
-      mainDiv.style.overflow = "";
-    }, { once: true });
-  } else if (direction === "hide") {
-    mainDiv.classList.add("slide-out-right");
-    mainDiv.addEventListener("animationend", () => {
-      mainDiv.classList.remove("slide-out-right");
-      mainDiv.style.opacity = 0;
-      mainDiv.style.pointerEvents = "none";
-      mainDiv.style.height = "0";
-      mainDiv.style.overflow = "hidden";
-    }, { once: true });
+  const header = document.querySelector('.rankingHeader');
+  const rows = Array.from(document.querySelectorAll('.rankingElement'));
+  const lower = document.querySelector('.lowerHeader');
+  const all = [header, ...rows, lower].filter(Boolean);
+
+  let indices = direction === "show"
+    ? [...all.keys()]
+    : [...all.keys()].reverse();
+
+  function animateNext(i) {
+    if (i >= indices.length) return;
+    const el = all[indices[i]];
+    el.classList.remove('animated-in', 'animated-out');
+    if (direction === "show") {
+      el.style.opacity = 1;
+      el.classList.add('animated-in');
+      el.addEventListener('animationend', function handler() {
+        el.classList.remove('animated-in');
+        el.removeEventListener('animationend', handler);
+        animateNext(i + 1);
+      });
+    } else {
+      el.classList.add('animated-out');
+      el.addEventListener('animationend', function handler() {
+        el.classList.remove('animated-out');
+        el.style.opacity = 0;
+        el.removeEventListener('animationend', handler);
+        animateNext(i + 1);
+      });
+    }
   }
+  animateNext(0);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -145,65 +156,4 @@ function updateRankingElements(data) {
   });
 
   previousRanks = { ...newRanks };
-}
-
-const mainDiv = document.getElementById("mainDiv");
-
-function animateColumns(direction) {
-  const mainDiv = document.getElementById("mainDiv");
-  mainDiv.classList.remove("slide-in-left", "slide-out-right");
-  if (direction === "show") {
-    mainDiv.style.opacity = 1;
-    mainDiv.style.pointerEvents = "auto";
-    mainDiv.classList.add("slide-in-left");
-    mainDiv.addEventListener("animationend", () => {
-      mainDiv.classList.remove("slide-in-left");
-      mainDiv.style.height = ""; // Reset height after show
-      mainDiv.style.overflow = "";
-    }, { once: true });
-  } else if (direction === "hide") {
-    mainDiv.classList.add("slide-out-right");
-    mainDiv.addEventListener("animationend", () => {
-      mainDiv.classList.remove("slide-out-right");
-      mainDiv.style.opacity = 0;
-      mainDiv.style.pointerEvents = "none";
-      mainDiv.style.height = "0";
-      mainDiv.style.overflow = "hidden";
-    }, { once: true });
-  }
-}
-
-function animateRows(direction) {
-  const rows = Array.from(document.querySelectorAll(".rankingElement"));
-  let indices;
-  if (direction === "show") {
-    indices = [...rows.keys()];
-  } else {
-    indices = [...rows.keys()].reverse();
-  }
-
-  function animateNext(i) {
-    if (i >= indices.length) return;
-    const row = rows[indices[i]];
-    row.classList.remove("row-slide-in-left", "row-slide-out-right");
-    if (direction === "show") {
-      row.style.opacity = 1;
-      row.classList.add("row-slide-in-left");
-      row.addEventListener("animationend", function handler() {
-        row.classList.remove("row-slide-in-left");
-        row.removeEventListener("animationend", handler);
-        animateNext(i + 1);
-      });
-    } else {
-      row.classList.add("row-slide-out-right");
-      row.addEventListener("animationend", function handler() {
-        row.classList.remove("row-slide-out-right");
-        row.style.opacity = 0;
-        row.removeEventListener("animationend", handler);
-        animateNext(i + 1);
-      });
-    }
-  }
-
-  animateNext(0);
 }

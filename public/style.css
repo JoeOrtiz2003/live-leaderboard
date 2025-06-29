@@ -240,20 +240,20 @@ body {
   animation: slideOutRight 0.7s forwards;
 }
 
-@keyframes rowSlideInLeft {
+@keyframes fadeSlideInLeft {
   from { transform: translateX(-100%); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
 }
-@keyframes rowSlideOutRight {
+@keyframes fadeSlideOutRight {
   from { transform: translateX(0); opacity: 1; }
   to   { transform: translateX(100%); opacity: 0; }
 }
 
-.rankingElement.row-slide-in-left {
-  animation: rowSlideInLeft 0.4s forwards;
+.animated-in {
+  animation: fadeSlideInLeft 0.4s forwards;
 }
-.rankingElement.row-slide-out-right {
-  animation: rowSlideOutRight 0.4s forwards;
+.animated-out {
+  animation: fadeSlideOutRight 0.4s forwards;
 }
 
 /* Optional: Prevent pointer events during animation */
