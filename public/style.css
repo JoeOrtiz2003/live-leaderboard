@@ -225,12 +225,12 @@ body {
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
+  from { transform: translateX(-100%) translateY(115px); opacity: 0; }
+  to   { transform: translateX(0%) translateY(115px); opacity: 1; }
 }
 @keyframes slideOutRight {
-  from { transform: translateX(0); opacity: 1; }
-  to   { transform: translateX(100%); opacity: 0; }
+  from { transform: translateX(0%) translateY(115px); opacity: 1; }
+  to   { transform: translateX(100%) translateY(115px); opacity: 0; }
 }
 
 #mainDiv.slide-in-left {
@@ -238,6 +238,22 @@ body {
 }
 #mainDiv.slide-out-right {
   animation: slideOutRight 0.7s forwards;
+}
+
+@keyframes rowSlideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes rowSlideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+}
+
+.rankingElement.row-slide-in-left {
+  animation: rowSlideInLeft 0.4s forwards;
+}
+.rankingElement.row-slide-out-right {
+  animation: rowSlideOutRight 0.4s forwards;
 }
 
 /* Optional: Prevent pointer events during animation */

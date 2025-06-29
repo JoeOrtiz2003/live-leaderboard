@@ -6,9 +6,9 @@ setInterval(() => {
     .then(command => {
       if (command.action !== lastAction) {
         if (command.action === "hide") {
-          animateMainDiv("hide");
+          animateRows("hide");
         } else if (command.action === "show") {
-          animateMainDiv("show");
+          animateRows("show");
         }
         lastAction = command.action;
       }
@@ -185,4 +185,39 @@ function animateColumns(direction) {
       });
     });
   }
+}
+
+function animateRows(direction) {
+  const rows = Array.from(document.querySelectorAll(".rankingElement"));
+  let indices;
+  if (direction === "show") {
+    indices = [...rows.keys()];
+  } else {
+    indices = [...rows.keys()].reverse();
+  }
+
+  function animateNext(i) {
+    if (i >= indices.length) return;
+    const row = rows[indices[i]];
+    row.classList.remove("row-slide-in-left", "row-slide-out-right");
+    if (direction === "show") {
+      row.style.opacity = 1;
+      row.classList.add("row-slide-in-left");
+      row.addEventListener("animationend", function handler() {
+        row.classList.remove("row-slide-in-left");
+        row.removeEventListener("animationend", handler);
+        animateNext(i + 1);
+      });
+    } else {
+      row.classList.add("row-slide-out-right");
+      row.addEventListener("animationend", function handler() {
+        row.classList.remove("row-slide-out-right");
+        row.style.opacity = 0;
+        row.removeEventListener("animationend", handler);
+        animateNext(i + 1);
+      });
+    }
+  }
+
+  animateNext(0);
 }
