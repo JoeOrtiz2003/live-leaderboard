@@ -257,10 +257,10 @@ body {
 }*/
 
 .stagger-animate-in {
-  animation: fadeSlideInRight 0.12s ease-in-out forwards;
+  animation: fadeSlideInRight 0.10s ease-in-out forwards;
 }
 .stagger-animate-out {
-  animation: fadeSlideOutRight 0.12s ease-in-out forwards;
+  animation: fadeSlideOutRight 0.10s ease-in-out forwards;
 }
 
 /* Optional: Prevent pointer events during animation */
@@ -298,10 +298,4 @@ h1,
 h2,
 p {
   margin: 0;
-}
-
-#mainDiv[style*="opacity: 0"] {
-  pointer-events: none;
-  height: 0 !important;
-  overflow: hidden !important;
 }
