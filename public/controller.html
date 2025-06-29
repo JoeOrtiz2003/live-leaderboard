@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Leaderboard Controller</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #222; color: #fff; }
+    button { margin: 10px; padding: 10px 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Live Ranking</h1>
+  <button onclick="send('show')">Show</button>
+  <button onclick="send('hide')">Hide</button>
+  <button onclick="send('refresh')">Refresh</button>
+
+  <script>
+    function send(action) {
+      fetch('/api/control', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action })
+      }).then(res => res.json())
+        .then(data => console.log(data))
+        .catch(console.error);
+    }
+  </script>
+</body>
+</html>
