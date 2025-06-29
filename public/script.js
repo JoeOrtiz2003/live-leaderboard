@@ -1,3 +1,5 @@
+let lastAction = null;
+
 setInterval(() => {
   fetch("/api/control")
     .then(res => res.json())
@@ -7,8 +9,6 @@ setInterval(() => {
           animateMainDiv("hide");
         } else if (command.action === "show") {
           animateMainDiv("show");
-        } else if (command.action === "refresh") {
-          fetchRankingData();
         }
         lastAction = command.action;
       }
