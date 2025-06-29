@@ -37,6 +37,7 @@ function animateColumns(direction) {
     }
     const el = all[indices[i]];
     el.classList.remove('animated-in', 'animated-out');
+    el.style.animationDelay = `${i * 100}ms`; // <-- Add this line
     if (direction === "show") {
       // Restore container on show
       if (i === 0) {
@@ -48,6 +49,7 @@ function animateColumns(direction) {
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-in');
+        el.style.animationDelay = ""; // Reset after animation
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
@@ -56,6 +58,7 @@ function animateColumns(direction) {
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
         el.style.opacity = 0;
+        el.style.animationDelay = ""; // Reset after animation
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
