@@ -6,29 +6,35 @@ setInterval(() => {
     .then(command => {
       if (command.action !== lastAction) {
         if (command.action === "hide") {
-          animateRows("hide");
+          animateColumns("hide");
         } else if (command.action === "show") {
-          animateRows("show");
+          animateColumns("show");
         }
         lastAction = command.action;
       }
     });
 }, 1000);
 
-function animateMainDiv(direction) {
+function animateColumns(direction) {
   const mainDiv = document.getElementById("mainDiv");
   mainDiv.classList.remove("slide-in-left", "slide-out-right");
   if (direction === "show") {
     mainDiv.style.opacity = 1;
+    mainDiv.style.pointerEvents = "auto";
     mainDiv.classList.add("slide-in-left");
     mainDiv.addEventListener("animationend", () => {
       mainDiv.classList.remove("slide-in-left");
+      mainDiv.style.height = ""; // Reset height after show
+      mainDiv.style.overflow = "";
     }, { once: true });
   } else if (direction === "hide") {
     mainDiv.classList.add("slide-out-right");
     mainDiv.addEventListener("animationend", () => {
       mainDiv.classList.remove("slide-out-right");
       mainDiv.style.opacity = 0;
+      mainDiv.style.pointerEvents = "none";
+      mainDiv.style.height = "0";
+      mainDiv.style.overflow = "hidden";
     }, { once: true });
   }
 }
@@ -144,46 +150,26 @@ function updateRankingElements(data) {
 const mainDiv = document.getElementById("mainDiv");
 
 function animateColumns(direction) {
-  const rows = Array.from(document.querySelectorAll(".rankingElement"));
+  const mainDiv = document.getElementById("mainDiv");
+  mainDiv.classList.remove("slide-in-left", "slide-out-right");
   if (direction === "show") {
-    rows.forEach((row, i) => {
-      const cols = [
-        row.querySelector(".rankingElementRank"),
-        row.querySelector(".rankingElementLogoWrapper"),
-        row.querySelector(".rankingElementAliveWrapper"),
-        row.querySelector(".rankingElementKills"),
-      ];
-      cols.forEach((col, j) => {
-        col.style.opacity = 0;
-        col.classList.remove("slide-out-right");
-        setTimeout(() => {
-          col.classList.add("slide-in-left");
-          col.style.opacity = 1;
-          col.addEventListener("animationend", () => {
-            col.classList.remove("slide-in-left");
-          }, { once: true });
-        }, i * 80 + j * 40); // stagger per row and column
-      });
-    });
+    mainDiv.style.opacity = 1;
+    mainDiv.style.pointerEvents = "auto";
+    mainDiv.classList.add("slide-in-left");
+    mainDiv.addEventListener("animationend", () => {
+      mainDiv.classList.remove("slide-in-left");
+      mainDiv.style.height = ""; // Reset height after show
+      mainDiv.style.overflow = "";
+    }, { once: true });
   } else if (direction === "hide") {
-    rows.slice().reverse().forEach((row, i) => {
-      const cols = [
-        row.querySelector(".rankingElementRank"),
-        row.querySelector(".rankingElementLogoWrapper"),
-        row.querySelector(".rankingElementAliveWrapper"),
-        row.querySelector(".rankingElementKills"),
-      ];
-      cols.forEach((col, j) => {
-        col.classList.remove("slide-in-left");
-        setTimeout(() => {
-          col.classList.add("slide-out-right");
-          col.addEventListener("animationend", () => {
-            col.classList.remove("slide-out-right");
-            col.style.opacity = 0;
-          }, { once: true });
-        }, i * 80 + j * 40); // stagger per row and column
-      });
-    });
+    mainDiv.classList.add("slide-out-right");
+    mainDiv.addEventListener("animationend", () => {
+      mainDiv.classList.remove("slide-out-right");
+      mainDiv.style.opacity = 0;
+      mainDiv.style.pointerEvents = "none";
+      mainDiv.style.height = "0";
+      mainDiv.style.overflow = "hidden";
+    }, { once: true });
   }
 }
 
