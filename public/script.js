@@ -52,18 +52,18 @@ function animateColumns(direction) {
     if (direction === "show") {
       // Only now make it visible and start animation
       el.style.visibility = "visible";
-      el.style.opacity = 1;
+      // Do NOT set opacity to 1 here; let the animation handle it
       el.classList.add('animated-in');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-in');
+        el.style.opacity = 1; // Ensure it's fully visible after animation
         el.style.animationDelay = "0ms";
         el.removeEventListener('animationend', handler);
         animateNext(i + 1);
       });
     } else {
-      // Only now make it visible and start animation
       el.style.visibility = "visible";
-      el.style.opacity = 1;
+      // Do NOT set opacity to 1 here; let the animation handle it
       el.classList.add('animated-out');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
