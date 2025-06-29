@@ -46,7 +46,7 @@ function animateColumns(direction) {
     }
     const el = all[indices[i]];
     el.classList.remove('stagger-animate-in', 'stagger-animate-out');
-    el.style.animationDelay = `${i * 100}ms`;
+    el.style.animationDelay = "0ms"; // No delay
 
     if (direction === "show") {
       el.style.visibility = "visible";
