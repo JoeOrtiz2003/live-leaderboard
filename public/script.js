@@ -27,14 +27,9 @@ function animateColumns(direction) {
     : [...all.keys()].reverse();
 
   // Hide all rows before show, show all before hide
-  all.forEach((el, idx) => {
-    if (direction === "show") {
-      el.style.opacity = 0;
-      el.style.visibility = "hidden";
-    } else {
-      el.style.opacity = 1;
-      el.style.visibility = "visible";
-    }
+  all.forEach((el) => {
+    el.style.opacity = 0;
+    el.style.visibility = "hidden";
   });
 
   if (direction === "show") {
@@ -55,6 +50,7 @@ function animateColumns(direction) {
     el.style.animationDelay = `${i * 100}ms`;
 
     if (direction === "show") {
+      // Only now make it visible and start animation
       el.style.visibility = "visible";
       el.style.opacity = 1;
       el.classList.add('animated-in');
@@ -65,6 +61,9 @@ function animateColumns(direction) {
         animateNext(i + 1);
       });
     } else {
+      // Only now make it visible and start animation
+      el.style.visibility = "visible";
+      el.style.opacity = 1;
       el.classList.add('animated-out');
       el.addEventListener('animationend', function handler() {
         el.classList.remove('animated-out');
