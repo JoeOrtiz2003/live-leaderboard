@@ -257,10 +257,10 @@ body {
 }*/
 
 .stagger-animate-in {
-  animation: fadeSlideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeSlideInRight 0.40s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .stagger-animate-out {
-  animation: fadeSlideOutRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeSlideOutRight 0.40s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Optional: Prevent pointer events during animation */
