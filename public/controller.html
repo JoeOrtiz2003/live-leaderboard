@@ -6,12 +6,21 @@
   <style>
     body { font-family: sans-serif; padding: 20px; background: #222; color: #fff; }
     button { margin: 10px; padding: 10px 20px; font-size: 18px; }
+    .section { margin-bottom: 32px; }
   </style>
 </head>
 <body>
-  <h1>Live Ranking</h1>
-  <button onclick="send('show')">Show</button>
-  <button onclick="send('hide')">Hide</button>
+  <div class="section">
+    <h1>Live Ranking</h1>
+    <button onclick="send('show')">Show</button>
+    <button onclick="send('hide')">Hide</button>
+  </div>
+
+  <div class="section">
+    <h1>Scoreboard</h1>
+    <button onclick="send('scoreboard_show')">Show</button>
+    <button onclick="send('scoreboard_hide')">Hide</button>
+  </div>
 
   <script>
     function send(action) {
