@@ -81,28 +81,47 @@ fetchAndDisplayData(); // Initial fetch
 setInterval(fetchAndDisplayData, 5000); // Auto-fetch every 5 seconds
 
 function showScoreboard() {
-  const left = document.getElementById('leftGrouping');
-  const right = document.getElementById('rightGrouping');
-  left.classList.remove('left-out');
-  right.classList.remove('right-out');
-  left.classList.add('left-in');
-  right.classList.add('right-in');
-  left.style.opacity = 1;
-  right.style.opacity = 1;
+  const leftRows = Array.from(document.querySelectorAll('#leftGrouping .teamBraket'));
+  const rightRows = Array.from(document.querySelectorAll('#rightGrouping .teamBraket'));
+
+  leftRows.forEach((row, i) => {
+    row.classList.remove('left-out');
+    row.style.opacity = 0;
+    setTimeout(() => {
+      row.classList.add('left-in');
+      row.style.opacity = 1;
+    }, i * 80); // 80ms stagger, adjust as needed
+  });
+
+  rightRows.forEach((row, i) => {
+    row.classList.remove('right-out');
+    row.style.opacity = 0;
+    setTimeout(() => {
+      row.classList.add('right-in');
+      row.style.opacity = 1;
+    }, i * 80); // 80ms stagger, adjust as needed
+  });
 }
 
 function hideScoreboard() {
-  const left = document.getElementById('leftGrouping');
-  const right = document.getElementById('rightGrouping');
-  left.classList.remove('left-in');
-  right.classList.remove('right-in');
-  left.classList.add('left-out');
-  right.classList.add('right-out');
-  // Optionally hide after animation
-  setTimeout(() => {
-    left.style.opacity = 0;
-    right.style.opacity = 0;
-  }, 350);
+  const leftRows = Array.from(document.querySelectorAll('#leftGrouping .teamBraket'));
+  const rightRows = Array.from(document.querySelectorAll('#rightGrouping .teamBraket'));
+
+  leftRows.forEach((row, i) => {
+    row.classList.remove('left-in');
+    setTimeout(() => {
+      row.classList.add('left-out');
+      row.style.opacity = 0;
+    }, i * 80); // 80ms stagger, adjust as needed
+  });
+
+  rightRows.forEach((row, i) => {
+    row.classList.remove('right-in');
+    setTimeout(() => {
+      row.classList.add('right-out');
+      row.style.opacity = 0;
+    }, i * 80); // 80ms stagger, adjust as needed
+  });
 }
 
 // Listen for show/hide commands from your backend or controller
