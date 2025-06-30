@@ -132,11 +132,3 @@ setInterval(() => {
     });
 }, 1000);
 
-// Example show/hide functions
-function showScoreboard() {
-  document.getElementById('mainDiv').style.display = 'block';
-}
-function hideScoreboard() {
-  document.getElementById('mainDiv').style.display = 'none';
-}
-
