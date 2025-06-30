@@ -18,7 +18,7 @@ app.get('/api/control', (req, res) => {
 // Set new state
 app.post('/api/control', (req, res) => {
   const { action } = req.body;
-  if (["show", "hide", "refresh"].includes(action)) {
+  if (["show", "hide", "refresh", "scoreboard_show", "scoreboard_hide"].includes(action)) {
     controlState = { action, timestamp: Date.now() };
     res.json({ success: true });
   } else {
@@ -26,9 +26,24 @@ app.post('/api/control', (req, res) => {
   }
 });
 
-// Render fallback
-app.get('*', (req, res) => {
+// Serve controller.html at /controller
+app.get('/controller', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'controller.html'));
+});
+
+// Serve display.html at /display
+app.get('/display', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'display.html'));
+});
+
+// Serve scoreboard.html at /scoreboard
+app.get('/scoreboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'scoreboard.html'));
+});
+
+// Fallback: redirect to controller
+app.get('*', (req, res) => {
+  res.redirect('/controller');
 });
 
 const PORT = process.env.PORT || 3000;
