@@ -115,3 +115,28 @@ window.addEventListener('message', (event) => {
 window.showScoreboard = showScoreboard;
 window.hideScoreboard = hideScoreboard;
 
+let lastAction = null;
+
+setInterval(() => {
+  fetch('/api/control')
+    .then(res => res.json())
+    .then(command => {
+      if (command.action !== lastAction) {
+        if (command.action === "scoreboard_show") {
+          showScoreboard();
+        } else if (command.action === "scoreboard_hide") {
+          hideScoreboard();
+        }
+        lastAction = command.action;
+      }
+    });
+}, 1000);
+
+// Example show/hide functions
+function showScoreboard() {
+  document.getElementById('mainDiv').style.display = 'block';
+}
+function hideScoreboard() {
+  document.getElementById('mainDiv').style.display = 'none';
+}
+
